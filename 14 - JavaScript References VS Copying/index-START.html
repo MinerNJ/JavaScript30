@@ -8,29 +8,43 @@
 
   <script>
     // start with strings, numbers and booleans
+    let age = 100;
+    let age2 = age;
+
+    let name = 'Nick'
+    let name2 = name;
 
     // Let's say we have an array
     const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
 
     // and we want to make a copy of it.
+    const team = players;
 
     // You might think we can just do something like this:
+    team[3] = 'Nick';
 
     // however what happens when we update that array?
-
     // now here is the problem!
-
     // oh no - we have edited the original array too!
-
     // Why? It's because that is an array reference, not an array copy. They both point to the same array!
-
     // So, how do we fix this? We take a copy instead!
 
-    // one way
+    const team2 = players.slice();
+    team2[4] = 'Kirby';
+    console.log(team2);
+    console.log(players);
 
+    // one way
     // or create a new array and concat the old one in
 
+    const team3 = [].concat(players);
+    console.log(team3);
+
     // or use the new ES6 Spread
+    const team4 = [...players];
+    console.log(team4);
+
+    const team5 = Array.from(players);
 
     // now when we update it, the original one isn't changed
 
@@ -43,12 +57,49 @@
     };
 
     // and think we make a copy:
+    // const captain = person;
+    // captain.age = 99;
+    // console.log(captain);
+    // console.log(person);
+    //Changing something this way changes the original object
 
     // how do we take a copy instead?
+    const captain2 = Object.assign({}, person, {number: 99, age: 28});
+    console.log(captain2);
+    console.log(person);
 
-    // We will hopefully soon see the object ...spread
+    // Similar to React:
+    const captain3 = {...person};
+    console.log(captain3);
 
-    // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+    // Things to note - this is only 1 level deep - both for Arrays and Objects. 
+    //lodash has a cloneDeep method, but you should think twice before using it.
+
+    const nick = {
+      name: 'Nick',
+      age: 28,
+      social: {
+        website: 'MinerNJ@github.io',
+        LinkedIn: 'Nicholas J. Miner'
+      }
+    };
+
+    console.log(nick);
+
+    // const dev = Object.assign({}, nick);
+    // dev.social.LinkedIn = 'coolguy';
+    // console.log(nick);
+    // console.log(dev);
+
+    //changes the original object. Assign only works one level deep, as mentioned above.
+
+    const dev2 = JSON.parse(JSON.stringify(nick))
+      dev2.social.LinkedIn = 'coolguy';
+      console.log(nick);
+      console.log(dev2);
+
+    //poor man's data clone. Take the JSON representing the object, parse all its contents
+    //to strings, then create a new JSON object from the parsed String data.
 
   </script>
 
